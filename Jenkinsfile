@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Show Variables') {
       steps {
-        sh 'sh \'printenv\''
+        sh 'printenv'
       }
     }
 
