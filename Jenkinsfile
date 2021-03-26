@@ -29,9 +29,9 @@ pipeline {
 
         stage('Run Tests') {
           // parallel {
-            stage('Static code analysis') {
+            // stage('Static code analysis') {
                 steps { sh 'npm run-script lint --prefix ./Training-Pipeline-UI' }
-            }
+            // }
             // stage('Unit tests') {
             //     steps { sh 'npm run-script automated_test --prefix ./Training-Pipeline-UI' }                       
             // }
