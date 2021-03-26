@@ -24,7 +24,7 @@ pipeline {
       stages {
         
         stage('NPM Install') {
-          steps { sh 'npm install' }
+          steps { sh 'npm install --prefix ./Training-Pipeline-UI' }
         }
 
         stage('Run Tests') {
