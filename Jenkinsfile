@@ -33,7 +33,7 @@ pipeline {
                 steps { sh 'npm run-script lint --prefix ./Training-Pipeline-UI' }
             }
             stage('Unit tests') {
-                steps { sh 'npm run-script automated_test --prefix .\Training-Pipeline-UI' }                       
+                steps { sh 'npm run-script automated_test --prefix ./Training-Pipeline-UI' }                       
             }
           }
         }
