@@ -30,16 +30,16 @@ pipeline {
         stage('Run Tests') {
           parallel {
             stage('Static code analysis') {
-                steps { sh 'npm run-script lint' }
+                steps { sh 'npm run-script lint --prefix ./Training-Pipeline-UI' }
             }
             stage('Unit tests') {
-                steps { sh 'npm run-script test' }
+                steps { sh 'npm run-script test --prefix ./Training-Pipeline-UI' }
             }
           }
         }
 
         stage('Build') {
-          steps { sh 'npm run-script build' }
+          steps { sh 'npm run-script build --prefix ./Training-Pipeline-UI' }
         }
       }
     }
