@@ -133,7 +133,7 @@ pipeline {
 
         stage('Build') {
           steps { 
-            sh "npm run-script production_build --prefix ./Training-Pipeline-UI" 
+            sh 'npm run-script production_build --prefix ./Training-Pipeline-UI' 
           }
         }
 
