@@ -134,12 +134,7 @@ pipeline {
         stage('Build') {
           steps { 
             sh 'npm run-script production_build --prefix ./Training-Pipeline-UI' 
-
-            script{
-              def  FILES_LIST = sh (script: "ls   '${workers_dir}'", returnStdout: true).trim()
-              //DEBUG
-              echo "FILES_LIST : ${FILES_LIST}"
-            }
+            zip zipFile: "${REPO_NAME}.${PACKAGE_VERSION}.zip", archive: true, dir: 'dist'
           }
         }
       }
