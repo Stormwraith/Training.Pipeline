@@ -133,8 +133,9 @@ pipeline {
 
         stage('Build') {
           steps { 
-            sh 'npm run-script production_build --prefix ./Training-Pipeline-UI' 
-            zip zipFile: "${REPO_NAME}.${PACKAGE_VERSION}.zip", archive: true, dir: 'dist'
+
+            sh "npm run-script production_build --prefix ./Training-Pipeline-UI" 
+            zip zipFile: "${REPO_NAME}.${PACKAGE_VERSION}.zip", archive: true, dir: './Training-Pipeline-UI/dist'
           }
         }
       }
