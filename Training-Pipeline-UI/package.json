@@ -7,6 +7,7 @@
     "build": "ng build",
     "test": "ng test",
     "automated_test": "ng test --watch=false --browsers=ChromeHeadlessCI",
+    "production_build": "ng build --prod",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
