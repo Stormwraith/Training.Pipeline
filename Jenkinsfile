@@ -6,6 +6,8 @@ pipeline {
     BUILD_MINOR = sh(returnStdout: true, script: "echo \$(((\$(date +%-m)-1)/3+1))").trim();
     BUILD_PATCH = sh(returnStdout: true, script: "echo \$(date +%m%d)").trim();
     BUILD_REV = 0;
+    S3_BUCKET_NAME_PREFIX = 'storm-cicd-deploy-';
+    AWS_REGION = 'eu-west-2';
   }
 
   agent { label 'linux' }
@@ -40,6 +42,27 @@ pipeline {
         
         stage('Calculate Build No.'){
           stages{
+          
+
+            stage ('Determine Target Env.'){
+
+              steps {
+                script {
+
+                  if(BRANCH_NAME.toLowerCase().startsWith('master')) {
+                    env.DEPLOYMENT_ENVIRONMENT = 'stable';
+                  } else if(BRANCH_NAME.toLowerCase().startsWith('qa')) {
+                    env.DEPLOYMENT_ENVIRONMENT = 'qa';
+                  }
+                  else {
+                    env.DEPLOYMENT_ENVIRONMENT = 'dev';
+                  }
+
+                  echo "Deploying to the ${DEPLOYMENT_ENVIRONMENT} environment."
+
+                }
+              }
+            }
 
             stage('Set Revision from based on Git Tag') {
               steps {
@@ -142,6 +165,18 @@ pipeline {
             zip zipFile: "${REPO_NAME}.${PACKAGE_VERSION}.zip", archive: true, dir: './Training-Pipeline-UI/dist'
           }
         }
+
+        
+        stage('Upload to S3'){
+          steps{
+            withAWS(credentials:"aws_deploy", region:"${AWS_REGION}") {
+              sh '''
+                aws s3 cp "Training-Pipeline-UI/dist/Training-Pipeline-UI" "s3://${S3_BUCKET_NAME_PREFIX}${DEPLOYMENT_ENVIRONMENT}/${REPO_NAME}/${PACKAGE_VERSION}/" --recursive
+              '''
+            }
+          }
+        }
+
       }
     }
   }
