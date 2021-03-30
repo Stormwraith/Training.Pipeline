@@ -171,7 +171,7 @@ pipeline {
           steps{
             withAWS(credentials:"aws_deploy", region:"${AWS_REGION}") {
               sh '''
-                aws s3 cp "Training-Pipeline-UI/dist/Training-Pipeline-UI" "s3://${S3_BUCKET_NAME_PREFIX}${DEPLOYMENT_ENVIRONMENT}/${REPO_NAME}/${PACKAGE_VERSION}/" --recursive
+                aws s3 cp ".//Training-Pipeline-UI//dist//Training-Pipeline-UI" "s3://${S3_BUCKET_NAME_PREFIX}${DEPLOYMENT_ENVIRONMENT}/${REPO_NAME}/${PACKAGE_VERSION}/" --recursive
               '''
             }
           }
